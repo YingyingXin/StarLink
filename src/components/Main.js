@@ -1,16 +1,17 @@
 import React from "react";
 import {Component} from "react/cjs/react.production.min"
 import SatSetting from "./SatSetting"
+import { Row, Col } from 'antd';
 
 class Main extends Component {
     render(){
         return(
-            <div className="main">
-                <div className="left-side">
+            <Row className="main">
+                <Col span={8} className="left-side">
                     <SatSetting />
-                </div>
-                <div className="right-side"> Right </div>
-            </div>
+                </Col>
+                <Col span={16} className="right-side">right</Col>
+            </Row>
 
         )
     }
