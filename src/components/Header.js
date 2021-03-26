@@ -1,6 +1,6 @@
-import React from "react";
-import {Component} from "react/cjs/react.production.min";
-import spacex_logo from "../assets/images/spacex_logo.svg";
+import React from "react"
+import {Component} from "react/cjs/react.production.min"
+import spacex_logo from "../assets/images/spacex_logo.svg"
 
 class Header extends Component {
     render(){

@@ -3,7 +3,7 @@ import {Button, Form, InputNumber} from "antd"
 
 class SatSettingForm extends Component {
     render() {
-        const { getFieldDecorator } = this.props.form;
+        const { getFieldDecorator } = this.props.form; //用法参加antd 3.x doc
         const FormItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -20,7 +20,7 @@ class SatSettingForm extends Component {
                                 required:true,
                                 message: "Please input your Longitude"
                             }]
-                        })(<InputNumber min={-180} max={180} style={{width:"100%"}} />)
+                        })(<InputNumber min={-180} max={180} placeholder="Input your longitude" style={{width:"100%"}} />)
                     }
                 </Form.Item>
 
@@ -57,7 +57,7 @@ class SatSettingForm extends Component {
                     }
                 </Form.Item>
                 <Form.Item className="show-nearby">
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" style={{textAlign: "center"}}>
                         Find Nearby Satellite
                     </Button>
                 </Form.Item>
@@ -67,7 +67,9 @@ class SatSettingForm extends Component {
 
     showSatellite = e=>{
         e.preventDefault();
+
         this.props.form.validateFields((err,values)=>{
+            console.log("form->onshow: value ->", values);
             if(!err){
                 this.props.onShow(values);
             }
