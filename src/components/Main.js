@@ -5,16 +5,37 @@ import { Row, Col } from 'antd'
 import SatelliteList from "./SatelliteList"
 import {SAT_API_KEY, STARLINK_CATEGORY, NEARBY_SATELLITE} from "../constants"
 import axios from "axios"
+import WorldMap from "./WorldMap"
 
 class Main extends Component {
     constructor(){
         super();
         this.state = {
             satInfo: null,
-            settings: null,
+            satList: null,
+            setting: null,
             isLoadingList: false
         };
     }
+    render(){
+        const { satInfo, satList, setting, isLoadingList } = this.state;
+        return(
+            <Row className="main">
+                <Col span={6} className="left-side">
+                    <SatSetting onShow={this.showNearbySatellite} />
+                    <SatelliteList
+                        satInfo={satInfo}
+                        isLoading={isLoadingList}
+                        onShowMap = {this.showMap} />
+                </Col>
+                <Col span={16} className="right-side">
+                    <WorldMap satData={satList} observerData={setting} />
+                </Col>
+            </Row>
+
+        )
+    }
+
 
     showNearbySatellite = (setting)=>{
         this.setState({
@@ -25,7 +46,7 @@ class Main extends Component {
 
     fetchSatellite = (setting)=>{
         const {latitude, longitude, elevation, altitude} = setting;
-        const url=`/api/${NEARBY_SATELLITE}/${latitude}/${longitude}/${elevation}/${altitude}/${STARLINK_CATEGORY}/&apiKey=${SAT_API_KEY}`;//?????????????
+        const url=`/api/${NEARBY_SATELLITE}/${latitude}/${longitude}/${elevation}/${altitude}/${STARLINK_CATEGORY}/&apiKey=${SAT_API_KEY}`;
         this.setState({
             isLoadingList: true
         });
@@ -39,7 +60,7 @@ class Main extends Component {
                 });
             })
             .catch(error=>{
-                console.log("err in fetch satellite -> ". error);
+                console.log("err in fetch satellite -> ", error);
                 this.setState({
                     isLoadingList: false
                 });
@@ -47,21 +68,13 @@ class Main extends Component {
     };
 
 
+    showMap = selected => {
+        this.setState(preState => ({
+            ...preState,
+            satList: [...selected]
+        }));
+    };
 
-    render(){
-        const { satInfo } = this.state;
-        return(
-            <Row className="main">
-                <Col span={8} className="left-side">
-                    <SatSetting onShow={this.showNearbySatellite} />
-                    <SatelliteList satInfo={satInfo} isLoading={this.state.isLoadingList} />
-                </Col>
-
-                <Col span={16} className="right-side">right</Col>
-            </Row>
-
-        )
-    }
 }
 
 export default Main;

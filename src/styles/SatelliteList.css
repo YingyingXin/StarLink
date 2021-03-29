@@ -13,3 +13,14 @@
     margin: 10px 0 15px;
 }
 
+.sat-list {
+    height: 300px;
+    overflow: scroll;
+}
+
+.spin-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+}
